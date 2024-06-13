@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
 
                 val result =realm.where(User::class.java).findFirst()
                 runBlocking {
-                    if (result == null || result.name.isNullOrBlank()) {
+                    if (result == null || result.name.isBlank()) {
                         Toast.makeText(this@MainActivity, "Create a new User", Toast.LENGTH_SHORT).show()
                         lifecycleScope.launch {
                             addNewUser()
