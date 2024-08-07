@@ -6,7 +6,6 @@
     android:background="@color/design_default_color_error"
     tools:context=".reperesentation.views.signup.DecksFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
 
 </FrameLayout>
