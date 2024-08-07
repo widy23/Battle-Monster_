@@ -33,5 +33,6 @@ object Versions {
     /**mongodb**/
     const val realmDb ="1.16.0"
     const val mongodb ="1.7.0"
+    const val mongoBzon="5.1.1"
 
 }

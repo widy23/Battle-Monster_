@@ -1,12 +1,14 @@
 package com.example.dude.reperesentation.views.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.example.dude.R
+import com.example.dude.databinding.ActivityMainBinding
 import com.example.dude.domain.models.User
+import com.example.dude.reperesentation.views.signup.SignUp
 import dagger.hilt.android.AndroidEntryPoint
 import io.realm.Realm
 import kotlinx.coroutines.launch
@@ -16,10 +18,12 @@ import kotlinx.coroutines.runBlocking
 class MainActivity : AppCompatActivity() {
 
     private lateinit var realm: Realm
+    private lateinit var biding : ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        biding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(biding.root)
     }
 
     override fun onResume() {
@@ -54,10 +58,12 @@ class MainActivity : AppCompatActivity() {
                 val result =realm.where(User::class.java).findFirst()
                 runBlocking {
                     if (result == null || result.name.isBlank()) {
+                        val intent = Intent(this@MainActivity,SignUp::class.java)
+                        startActivity(intent)
                         Toast.makeText(this@MainActivity, "Create a new User", Toast.LENGTH_SHORT).show()
-                        lifecycleScope.launch {
-                            addNewUser()
-                        }
+//                        lifecycleScope.launch {
+//                            addNewUser()
+//                        }
                     } else {
                         val userName = result.name
                         Toast.makeText(this@MainActivity, "User: $userName", Toast.LENGTH_SHORT).show()
