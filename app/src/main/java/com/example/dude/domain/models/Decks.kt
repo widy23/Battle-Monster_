@@ -1,19 +1,21 @@
 package com.example.dude.domain.models
 
+import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
 import io.realm.annotations.Required
 import org.bson.types.ObjectId
 
-
-data class Decks(
+@RealmClass
+open class Decks(
     @PrimaryKey
-    val dID:ObjectId = ObjectId(),
+    var _dID : ObjectId = ObjectId(),
     @Required
-    val deckName:String,
-    val deckTypes:String,
-    var deckQuantity : List<Cards>,
-){
+    var deckName:String="",
+    var deckTypes:String="",
+    var deckQuantity : Int=20,
+):RealmObject(){
     fun isDeckFull():Boolean{
-        return deckQuantity.size < 20
+        return deckQuantity < 20
     }
 }

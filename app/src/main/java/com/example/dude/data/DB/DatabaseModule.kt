@@ -7,10 +7,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import io.realm.DynamicRealm
 import io.realm.Realm
 import io.realm.Realm.getApplicationContext
 import io.realm.Realm.setDefaultConfiguration
 import io.realm.RealmConfiguration
+import io.realm.RealmMigration
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -26,8 +28,7 @@ object DatabaseModule {
     fun providesRealDataBase(@ApplicationContext context: Context)  {
         configuration = RealmConfiguration.Builder()
             .name(USER_DB)
-            .schemaVersion(1)
-            .allowQueriesOnUiThread(true)
+            .schemaVersion(3)
             .allowWritesOnUiThread(true)
             .build()
         val context = getApplicationContext()
@@ -50,5 +51,19 @@ object DatabaseModule {
     fun providesRealmInstance() :Realm{
         setDefaultConfiguration(configuration)
         return Realm.getDefaultInstance()
+    }
+    class MyMigration : RealmMigration {
+        override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
+            val schema = realm.schema
+
+            if (oldVersion == 1L) {
+                // Ejemplo de cambios en el esquema: añadir un nuevo campo
+                schema.get("Item")
+                    ?.addField("newField", String::class.java)
+                oldVersion + 1L
+            }
+
+            // Añade aquí más migraciones si cambias el esquema en el futuro
+        }
     }
 }

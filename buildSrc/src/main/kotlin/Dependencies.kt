@@ -56,6 +56,8 @@ object Dependencies {
     const val mongo ="org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.mongodb}"
     const val realmSync ="io.realm.kotlin:library-sync:${Versions.realmDb}"
     const val realmDB ="io.realm.kotlin:library-base:${Versions.realmDb}"
+   // const val mongoClient ="org.mongodb:mongodb-driver-kotlin:1.7.2"
+
 
     /** Testing **/
 
@@ -122,6 +124,7 @@ fun DependencyHandler.mongodb(){
     implementation(realmDB)
     implementation(realm)
     implementation(realmSync)
+    //implementation(mongoClient)
 }
 
 fun DependencyHandler.testing() {
